@@ -5,11 +5,11 @@ def prime_numbers(n):
         if primes[i]:
             for j in range(i**2, n+1, i):
                 primes[j] = False
-    for i in range(2, n+1):
-        if primes[i]:
-            print(i)
+    return [i for i in range(2, n+1) if primes[i]]
 
-prime_numbers(int(input('Введите число: ')))
+
+
+# prime_numbers(int(input('Введите число: ')))
 
 assert prime_numbers(10) == [2, 3, 5, 7]
 assert prime_numbers(20) == [2, 3, 5, 7, 11, 13, 17, 19]
