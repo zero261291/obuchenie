@@ -1,25 +1,35 @@
-lst = [5, 6, 8, 9, 25]
+import sqlite3
+connection = sqlite3.connect('example.db')
+connection.execute('''CREATE TABLE IF NOT EXISTS users
+(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)''')
 
-#          №1
+def create_user(name, age):
+    connection.execute("INSERT INTO users (name, age) VALUES (?, ?)", (name, age))
+    connection.commit()
 
-result = lst[0]
-for i in lst:
-    result *= i
+def read_user(id):
+    cursor = connection.execute("SELECT * FROM users WHERE id=?", (id,))
+    row = cursor.fetchone()
+    return row
 
-print(result)
+def update_user(id, name, age):
+    connection.execute("UPDATE users SET name=?, age=? WHERE id=?", (name, age, id))
+    connection.commit()
 
-#          №2
+    connection.execute("DELETE FROM users WHERE id=?", (id,))
+    connection.commit()
 
-print(min(lst))
+    create_user("John", 30)
+    create_user("Jane", 25)
 
-#          №3
+    user = read_user(1)
+    print(user)
 
-print(max(lst))
+    update_user(1, "Johnny", 31)
 
-#          №4
+    user = read_user(1)
+    print(user)
 
-print(sum(lst)/len(lst))
+    delete_user(1)
 
-#          №5
-
-#Не сделал
+    user = read_u
